@@ -1,0 +1,16 @@
+.titlebar {
+    user-select: none;
+    -webkit-app-region: drag;
+}
+.titlebar > .button-tooltip {
+    -webkit-app-region: no-drag;
+}
+html{
+    overflow: hidden !important;
+}
+.v-overlay.v-overlay--active > .v-overlay__scrim{
+    backdrop-filter: blur(2px);
+    background-color: rgba(33, 33, 33, 0.54) !important;
+    border-color: rgba(33, 33, 33, 0.54) !important;
+    opacity: 1 !important;
+}

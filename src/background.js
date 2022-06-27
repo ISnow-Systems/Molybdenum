@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -10,18 +10,42 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+function checkmax(w){
+  console.log("maxstat: ",w.isMaximized() ? 0 : 1);
+  w.webContents.send("maxstat",w.isMaximized() ? 0 : 1);
+}
+
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    titleBarStyle: 'hidden',
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: __dirname + '/preload.js',
     }
+  })
+  
+  ipcMain.handle("close",()=>{
+    win.close();
+  })
+  ipcMain.handle("minimize",()=>{
+    win.minimize();
+  })
+  ipcMain.handle("maximize",()=>{
+    win.maximize();
+  })
+  ipcMain.handle("unmaximize",()=>{
+    win.unmaximize();
+  })
+  ipcMain.handle("checkmax",()=>{
+    console.log("checkmax");
+    checkmax(win);
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -33,6 +57,12 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+  win.on("maximize",()=>{
+    checkmax(win);
+  });
+  win.on("unmaximize",()=>{
+    checkmax(win);
+  });
 }
 
 // Quit when all windows are closed.
@@ -79,3 +109,4 @@ if (isDevelopment) {
     })
   }
 }
+
