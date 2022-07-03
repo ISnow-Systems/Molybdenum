@@ -61,7 +61,7 @@
 						<v-list dense>
 							<v-tooltip right>
 								<template v-slot:activator="{ on }">
-									<v-list-item active-class="amber--text" v-on="on" :input-value="charmmode == 'window' ? true : false" @click.stop="()=>changecharm('window')">
+									<v-list-item active-class="pink--text" v-on="on" :input-value="charmmode == 'window' ? true : false" @click.stop="()=>changecharm('window')">
 										<v-list-item-action>
 											<v-icon>mdi-window-restore</v-icon>
 										</v-list-item-action>
@@ -74,7 +74,7 @@
 							</v-tooltip>
 							<v-tooltip right>
 								<template  v-slot:activator="{ on }">
-									<v-list-item active-class="amber--text" v-on="on" :input-value="charmmode == 'share' ? true : false" @click.stop="()=>changecharm('share')">
+									<v-list-item active-class="pink--text" v-on="on" :input-value="charmmode == 'share' ? true : false" @click.stop="()=>changecharm('share')">
 										<v-list-item-action>
 											<v-icon>mdi-share-variant</v-icon>
 										</v-list-item-action>
@@ -87,7 +87,7 @@
 							</v-tooltip>
 							<v-tooltip right>
 								<template  v-slot:activator="{ on }">
-									<v-list-item active-class="amber--text" v-on="on" :input-value="charmmode == 'settings' ? true : false" @click.stop="()=>changecharm('settings')">
+									<v-list-item active-class="pink--text" v-on="on" :input-value="charmmode == 'settings' ? true : false" @click.stop="()=>changecharm('settings')">
 										<v-list-item-action>
 											<v-icon>mdi-cog</v-icon>
 										</v-list-item-action>
@@ -100,7 +100,7 @@
 							</v-tooltip>
 							<v-tooltip right>
 								<template  v-slot:activator="{ on }">
-									<v-list-item active-class="amber--text" v-on="on" :input-value="charmmode == 'information' ? true : false" @click.stop="()=>changecharm('information')">
+									<v-list-item active-class="pink--text" v-on="on" :input-value="charmmode == 'information' ? true : false" @click.stop="()=>changecharm('information')">
 										<v-list-item-action>
 											<v-icon>mdi-information</v-icon>
 										</v-list-item-action>
@@ -170,10 +170,6 @@
 						<div>
 							<v-list-item>
 								<v-list-item-content>
-									<v-list-item-title class="text-wrap">
-										時計のスタイル
-									</v-list-item-title>
-									<v-select dense :items="clocktype"></v-select>
 								</v-list-item-content>
 							</v-list-item>
 						</div>
@@ -187,7 +183,7 @@
 										{{swname}}
 									</v-list-item-title>
 									<v-list-item-subtitle>
-										Version 0.999.001<br>
+										Version {{ver}}<br>
 										Copyright &copy; 2022 ISnow Systems
 									</v-list-item-subtitle>
 								</v-list-item-content>
@@ -262,10 +258,10 @@ export default {
 			windowState: {
 				maximized: false,
 			},
-			title: 'IcyClock',
-			swname: 'IcyClock',
-			ver: '0.999.001',
-			sysname: 'Alice',
+			title: 'Molybdenum',
+			swname: '₄₂Molybdenum',
+			ver: '0.999.201',
+			sysname: 'Yumemi',
 			ntime: "00:00:00",
 			charmmode: "window",
 			charmname: {
@@ -276,13 +272,6 @@ export default {
 				unknown: "不明"
 			},
 			elecver: [],
-			clocktype: [
-				"アナログ",
-				"デジタル",
-				"曖昧なアナログ",
-				"曖昧なデジタル",
-				"二進数"
-			],
 		}
 	},
 	mounted() {

@@ -1,6 +1,6 @@
 {
-  "name": "icyclock",
-  "version": "0.999.001",
+  "name": "molybdenum",
+  "version": "0.999.201",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
