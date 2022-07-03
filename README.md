@@ -1,24 +1,12 @@
-# icyfm
+# ISnow Molybdenum Browser
 
-## Project setup
+プロジェクトのセットアップ  
+単純に次のコマンドを実行してください。
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm i
 ```
 
-### Compiles and minifies for production
+開発を開始するには次のコマンドでホットリロードを有効にした Electron を起動します
 ```
-npm run build
+npm run electron:serve
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
