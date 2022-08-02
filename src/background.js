@@ -1,13 +1,18 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog, session } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+export { default as createProto2 } from './createProto2'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import createProto2 from './createProto2'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  { scheme: 'app', privileges: { secure: true, standard: true } },
+  { scheme: 'molybdenum', privileges: { secure: true, standard: true } },
+  { scheme: 'molybdenum-error', privileges: { secure: true, standard: true } },
+  { scheme: 'molybdenum-extension', privileges: { secure: true, standard: true } },
 ])
 
 function checkmax(w){
@@ -15,19 +20,30 @@ function checkmax(w){
   w.webContents.send("maxstat",w.isMaximized() ? 0 : 1);
 }
 
+var win;
+var mainWinSession;
+var s;
+
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     titleBarStyle: 'hidden',
+    frame: false,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: false,
-      contextIsolation: true,
+      contextIsolation: false,
       preload: __dirname + '/preload.js',
+      webviewTag: true,
+      enableWebSQL: true,
+      spellcheck: false,
+      enableBlinkFeatures: true,
+      defaultEncoding: "UTF-8",
+      session: mainWinSession,
     }
   })
   
@@ -48,12 +64,16 @@ async function createWindow() {
     checkmax(win);
   })
 
+  createProto2("molybdenum", "pages",mainWinSession);
+  createProto2("molybdenum-error", "errorpages",mainWinSession);
+  createProto2("molybdenum-extension", "extensions",mainWinSession);
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
-    createProtocol('app')
+    createProtocol('app',mainWinSession.protocol)
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
@@ -74,6 +94,13 @@ app.on('window-all-closed', () => {
   }
 })
 
+app.on('certificate-error', function(event, webContents, url, error, certificate, callback) {
+  event.preventDefault();
+  callback(false);
+});
+
+
+
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -84,6 +111,11 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  mainWinSession = session.fromPartition("persist:interface");
+  s = session.fromPartition("persist:wvcontent");
+  createProto2("molybdenum", "pages",s);
+  createProto2("molybdenum-error", "errorpages",s);
+  createProto2("molybdenum-extension", "extensions",s);
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>新しいタブ</title>
+        <meta name="viewport" content="width=device-width, height=device-height">
+        <link rel="stylesheet" href="/lib/bootstrap.min.css">
+        <link rel="stylesheet" href="/lib/bootstrap-reboot.min.css">
+        <link rel="stylesheet" href="/lib/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="/lib/bootstrap-utilities.min.css">
+        <link rel="stylesheet" href="/newtab.css">
+        <link rel="preload" as="image" href="/images/Image01.jpeg">
+    </head>
+    <body>
+        <h2 id="brname" class="text-border-lg"><sub>42</sub><span>M</span>olybdenum Browser</h2>
+        <div class="container">
+            <form id="seform">
+                <div class="row g-2" id="searchBoxes">
+                    <div class="col">
+                        <input type="search" class="form-control form-control-lg" placeholder="ここに入力して検索..." aria-label="ここに検索ワードを入力してインターネット上で検索をすることができます" id="sq" name="q">
+                    </div>
+                    <div class="col-md-auto">
+                        <input type="submit" class="btn btn-lg btn-light" id="searchgo" value="検索">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="/lib/jquery-3.6.0.min.js"></script>
+        <script src="/lib/bootstrap.bundle.min.js"></script>
+        <script src="/lib/autocomplete.js"></script>
+        <script src="/newtab.js"></script>
+    </body>
+</html>

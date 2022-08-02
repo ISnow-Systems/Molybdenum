@@ -1,6 +1,6 @@
 {
   "name": "molybdenum",
-  "version": "0.999.201",
+  "version": "0.999.202",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -26,7 +26,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "electron": "^19.0.6",
+    "copy-webpack-plugin": "^11.0.0",
+    "electron": "^20.0.0",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
@@ -52,8 +53,7 @@
     "rules": {}
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
+    "last 3 versions",
     "not dead"
   ]
 }
